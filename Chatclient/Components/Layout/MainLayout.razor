@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+@using MudBlazor
+
+<MudThemeProvider Theme="_theme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+<Header @rendermode="RenderMode.InteractiveServer" />
+    <MudMainContent Class="pt-0 main-content">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    [Inject] NavigationManager Navigation { get; set; } = default!;
+
+    private void ShowAlert()
+    {
+      Console.WriteLine("Alert button clicked!");
+      
+    }
+
+    private readonly MudTheme _theme = new()
+    {
+        PaletteLight = new PaletteLight
+        {
+            Primary = "#0078D4",       // Microsoft blue
+            Secondary = "#50e6ff",
+            AppbarBackground = "#0078D4",
+            Background = "#f8f9fa",
+            Surface = "#ffffff",
+            TextPrimary = "#212529",
+            TextSecondary = "#6c757d",
+        }
+    };
+}

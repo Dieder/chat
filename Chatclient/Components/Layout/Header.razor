@@ -1,0 +1,24 @@
+@inherits LayoutComponentBase
+@using MudBlazor
+
+    <MudAppBar Elevation="2" Color="Color.Primary" Dense="false" Class="app-bar">
+        <MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Class="mr-3 app-icon" />
+        <MudText Typo="Typo.h5" Class="app-title">Azure AI Chat</MudText>
+        <MudSpacer />
+<MudIconButton Icon="@Icons.Material.Filled.Home"
+                       Color="Color.Inherit"
+                       Title="Home"
+                       OnClick="@(() => Navigation.NavigateTo("/"))"
+                       Class="mr-2" />
+        <MudIconButton Icon="@Icons.Material.Filled.Chat"
+                       Color="Color.Inherit"
+                       Title="New Chat"
+                       
+                       OnClick="@(() => Navigation.NavigateTo("/chatbot", forceLoad: true))"
+                       Class="mr-2" />
+     
+    </MudAppBar>
+y
+@code {
+    [Inject] NavigationManager Navigation { get; set; } = default!;
+}

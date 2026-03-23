@@ -1,0 +1,219 @@
+@page "/chatbot"
+
+@using ChatClient.Services.Models
+@using ChatClient.Services
+@using Markdig
+@using MudBlazor
+@inject IChatService ChatService
+@inject IJSRuntime JS
+@implements IDisposable
+
+<PageTitle>AI Chat</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="pa-0 chat-container" Style="height: calc(100vh - 64px); display: flex; flex-direction: column;">
+
+    <!-- ── Hero Section (Big Picture) ──────────────────────────────────────── -->
+    @if (_messages.Count == 0)
+    {
+        <MudPaper Class="hero-section" Elevation="0">
+            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="hero-content">
+                <div class="hero-icon-container">
+                    <MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Class="hero-icon" />
+                </div>
+                <MudText Typo="Typo.h3" Class="hero-title" Color="Color.Primary">Welcome to Azure AI Chat</MudText>
+                <MudText Typo="Typo.h6" Class="hero-subtitle" Color="Color.Default">
+                    Start a conversation with our AI assistant powered by Azure AI Foundry
+                </MudText>
+                <MudChipSet T="string" Class="mt-4">
+                    <MudChip T="string" Text="Ask questions" Color="Color.Primary" Variant="Variant.Outlined" />
+                    <MudChip T="string" Text="Get help with code" Color="Color.Secondary" Variant="Variant.Outlined" />
+                    <MudChip T="string" Text="Brainstorm ideas" Color="Color.Tertiary" Variant="Variant.Outlined" />
+                </MudChipSet>
+            </MudStack>
+        </MudPaper>
+    }
+
+    <!-- ── Message list ───────────────────────────────────────── -->
+    <MudPaper Elevation="0" Class="flex-grow-1 overflow-y-auto pa-4 messages-container" Style="background: var(--mud-palette-background);" id="chat-scroll">
+        @if (_messages.Count > 0)
+        {
+            @foreach (var msg in _messages)
+            {
+                <MudStack Row="@(msg.Role == MessageRole.User)"
+                          Justify="@(msg.Role == MessageRole.User ? Justify.FlexEnd : Justify.FlexStart)"
+                          Class="mb-4 message-row">
+
+                    @if (msg.Role == MessageRole.Assistant)
+                    {
+                        <MudAvatar Color="Color.Primary" Size="Size.Medium" Class="mt-1 mr-3 assistant-avatar">
+                            <MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Size="Size.Medium" />
+                        </MudAvatar>
+                    }
+
+                    <MudPaper Elevation="2"
+                              Class="pa-4 message-bubble"
+                              Style="@GetBubbleStyle(msg.Role)">
+                        @if (msg.Role == MessageRole.Assistant)
+                        {
+                            <!-- Render markdown for assistant messages -->
+                            <div class="mud-typography mud-typography-body1 markdown-body">
+                                @((MarkupString)RenderMarkdown(msg.Content))
+                            </div>
+                            @if (msg.IsStreaming)
+                            {
+                                <MudProgressLinear Indeterminate="true" Color="Color.Primary" Class="mt-2 streaming-indicator" Style="height: 3px;" />
+                            }
+                        }
+                        else
+                        {
+                            <MudText Typo="Typo.body1" Style="white-space: pre-wrap;">@msg.Content</MudText>
+                        }
+                        <MudText Typo="Typo.caption" Color="Color.Dark" Class="mt-2 message-timestamp" Style="opacity: 0.6;">
+                            @msg.Timestamp.ToLocalTime().ToString("HH:mm")
+                        </MudText>
+                    </MudPaper>
+
+                    @if (msg.Role == MessageRole.User)
+                    {
+                        <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="mt-1 ml-3 user-avatar">
+                            <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Medium" />
+                        </MudAvatar>
+                    }
+                </MudStack>
+            }
+        }
+    </MudPaper>
+
+    <!-- ── Enhanced Input bar ─────────────────────────────────────────── -->
+    <MudPaper Elevation="4" Class="input-section" Style="border-top: 1px solid var(--mud-palette-lines-default);">
+        @if (_error is not null)
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-3 mx-4" Dense="true" ShowCloseIcon="true" CloseIconClicked="() => _error = null">
+                @_error
+            </MudAlert>
+        }
+
+        <MudContainer MaxWidth="MaxWidth.Large" Class="px-4 py-3">
+            <MudStack Row="true" AlignItems="AlignItems.End" Spacing="3" Class="input-row">
+                <MudTextField @ref="_inputRef"
+                              @bind-Value="_userInput"
+                              Placeholder="Type your message here... (Shift+Enter for new line)"
+                              Variant="Variant.Outlined"
+                              Lines="1"
+                              AutoGrow="true"
+                              MaxLines="5"
+                              FullWidth="true"
+                              Disabled="@_isStreaming"
+                              OnKeyDown="HandleKeyDown"
+                              Class="message-input" />
+
+                <MudFab Color="Color.Primary"
+                        StartIcon="@(_isStreaming ? Icons.Material.Filled.Stop : Icons.Material.Filled.Send)"
+                        Size="Size.Large"
+                        Disabled="@(!_isStreaming && string.IsNullOrWhiteSpace(_userInput))"
+                        OnClick="@(async () => { if (_isStreaming) CancelStreaming(); else await SendMessage(); })"
+                        Title="@(_isStreaming ? "Stop generating" : "Send message")"
+                        Class="send-button" />
+            </MudStack>
+
+            <MudText Typo="Typo.caption" Color="Color.Default" Class="mt-2 powered-by" Style="opacity: 0.7; text-align: center;">
+                <MudIcon Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" Class="mr-1" />
+                Powered by Azure AI Foundry
+            </MudText>
+        </MudContainer>
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    private readonly List<ChatMessage> _messages = [];
+    private string _userInput = string.Empty;
+    private bool _isStreaming;
+    private string? _error;
+    private MudTextField<string>? _inputRef;
+    private CancellationTokenSource? _cts;
+
+    private async Task SendMessage()
+    {
+        var input = _userInput.Trim();
+        if (string.IsNullOrEmpty(input) || _isStreaming) return;
+
+        _userInput = string.Empty;
+        _error = null;
+
+        // Add user message
+        _messages.Add(new ChatMessage { Role = MessageRole.User, Content = input });
+
+        // Placeholder for streaming assistant reply
+        var assistantMsg = new ChatMessage { Role = MessageRole.Assistant, Content = "", IsStreaming = true };
+        _messages.Add(assistantMsg);
+
+        _isStreaming = true;
+        _cts = new CancellationTokenSource();
+
+        await ScrollToBottomAsync();
+        StateHasChanged();
+
+        try
+        {
+            await foreach (var token in ChatService.StreamResponseAsync(_messages.SkipLast(1), _cts.Token))
+            {
+                assistantMsg.Content += token;
+                StateHasChanged();
+                await ScrollToBottomAsync();
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            if (string.IsNullOrEmpty(assistantMsg.Content))
+                _messages.Remove(assistantMsg);
+        }
+        catch (Exception ex)
+        {
+            _messages.Remove(assistantMsg);
+            _error = $"Error communicating with AI: {ex.Message}";
+        }
+        finally
+        {
+            assistantMsg.IsStreaming = false;
+            _isStreaming = false;
+            _cts?.Dispose();
+            _cts = null;
+            StateHasChanged();
+            await FocusInputAsync();
+        }
+    }
+
+    private void CancelStreaming() => _cts?.Cancel();
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !e.ShiftKey)
+            await SendMessage();
+    }
+
+    private static string RenderMarkdown(string markdown)
+    {
+        if (string.IsNullOrEmpty(markdown)) return string.Empty;
+        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+        return Markdown.ToHtml(markdown, pipeline);
+    }
+
+    private static string GetBubbleStyle(MessageRole role) => role == MessageRole.User
+        ? "max-width: 75%; background-color: #0078D4; color: white; border-radius: 18px 18px 4px 18px;"
+        : "max-width: 80%; border-radius: 18px 18px 18px 4px;";
+
+    private async Task ScrollToBottomAsync()
+    {
+        try { await JS.InvokeVoidAsync("scrollToBottom", "chat-scroll"); }
+        catch { /* ignore JS interop errors during prerender */ }
+    }
+
+    private async Task FocusInputAsync()
+    {
+        if (_inputRef is not null)
+            await _inputRef.FocusAsync();
+    }
+
+    public void Dispose() => _cts?.Cancel();
+}

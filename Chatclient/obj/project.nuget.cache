@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "dgSpecHash": "fHAyzALccnM=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Diede\\Downloads\\chat\\Chatclient\\chat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Diede\\.nuget\\packages\\azure.ai.openai\\2.0.0\\azure.ai.openai.2.0.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\azure.ai.projects\\1.0.0-beta.10\\azure.ai.projects.1.0.0-beta.10.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\azure.core\\1.51.1\\azure.core.1.51.1.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\azure.storage.blobs\\12.24.1\\azure.storage.blobs.12.24.1.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\azure.storage.common\\12.23.0\\azure.storage.common.12.23.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\google.protobuf\\3.30.2\\google.protobuf.3.30.2.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\markdig\\0.40.0\\markdig.0.40.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.agents.ai\\1.0.0-rc4\\microsoft.agents.ai.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.agents.ai.abstractions\\1.0.0-rc4\\microsoft.agents.ai.abstractions.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.agents.ai.openai\\1.0.0-rc4\\microsoft.agents.ai.openai.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.agents.ai.workflows\\1.0.0-rc4\\microsoft.agents.ai.workflows.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.5\\microsoft.aspnetcore.app.internal.assets.10.0.5.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\10.0.5\\microsoft.aspnetcore.http.connections.client.10.0.5.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.aspnetcore.signalr.client\\10.0.5\\microsoft.aspnetcore.signalr.client.10.0.5.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.aspnetcore.signalr.client.core\\10.0.5\\microsoft.aspnetcore.signalr.client.core.10.0.5.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\10.0.2\\microsoft.bcl.asyncinterfaces.10.0.2.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.extensions.ai\\10.3.0\\microsoft.extensions.ai.10.3.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.3.0\\microsoft.extensions.ai.abstractions.10.3.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.extensions.ai.openai\\10.3.0\\microsoft.extensions.ai.openai.10.3.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.extensions.logging\\10.0.5\\microsoft.extensions.logging.10.0.5.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.extensions.logging.console\\10.0.5\\microsoft.extensions.logging.console.10.0.5.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.extensions.vectordata.abstractions\\9.7.0\\microsoft.extensions.vectordata.abstractions.9.7.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.identity.client\\4.73.1\\microsoft.identity.client.4.73.1.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.identity.client.extensions.msal\\4.73.1\\microsoft.identity.client.extensions.msal.4.73.1.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.35.0\\microsoft.identitymodel.abstractions.6.35.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\microsoft.ml.tokenizers\\2.0.0\\microsoft.ml.tokenizers.2.0.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\mudblazor\\7.15.0\\mudblazor.7.15.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\openai\\2.8.0\\openai.2.8.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\opentelemetry.api\\1.13.1\\opentelemetry.api.1.13.1.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\system.clientmodel\\1.9.0\\system.clientmodel.1.9.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\system.io.hashing\\6.0.0\\system.io.hashing.6.0.0.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\system.memory.data\\10.0.1\\system.memory.data.10.0.1.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\system.numerics.tensors\\10.0.3\\system.numerics.tensors.10.0.3.nupkg.sha512",
+    "C:\\Users\\Diede\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.5.0\\system.security.cryptography.protecteddata.4.5.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.Logging will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\Users\\Diede\\Downloads\\chat\\Chatclient\\chat.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Diede\\Downloads\\chat\\Chatclient\\chat.csproj",
+      "libraryId": "Microsoft.Extensions.Logging",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.Logging.Console will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\Users\\Diede\\Downloads\\chat\\Chatclient\\chat.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Diede\\Downloads\\chat\\Chatclient\\chat.csproj",
+      "libraryId": "Microsoft.Extensions.Logging.Console",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

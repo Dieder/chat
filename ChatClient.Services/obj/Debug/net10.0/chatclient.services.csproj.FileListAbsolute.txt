@@ -1,0 +1,12 @@
+C:\Users\Diede\Downloads\chat\chatclient.services\bin\Debug\net10.0\chatclient.services.deps.json
+C:\Users\Diede\Downloads\chat\chatclient.services\bin\Debug\net10.0\chatclient.services.dll
+C:\Users\Diede\Downloads\chat\chatclient.services\bin\Debug\net10.0\chatclient.services.pdb
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.csproj.AssemblyReference.cache
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.AssemblyInfoInputs.cache
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.AssemblyInfo.cs
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.csproj.CoreCompileInputs.cache
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.dll
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\refint\chatclient.services.dll
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\chatclient.services.pdb
+C:\Users\Diede\Downloads\chat\chatclient.services\obj\Debug\net10.0\ref\chatclient.services.dll
